@@ -29,11 +29,11 @@
                 .catch( apiError => res.json( { data: null, err: apiError } ))
             })
 
-            this.router.get('/:endpoint/:id', (req, res) => {
-                Controllers[req.params.endpoint].readOne(req)
-                .then( apiResponse => res.json( { data: apiResponse, err: null } ))
-                .catch( apiError => res.json( { data: null, err: apiError } ))
-            })
+            // this.router.get('/:endpoint/:id', (req, res) => {
+            //     Controllers[req.params.endpoint].readOne(req)
+            //     .then( apiResponse => res.json( { data: apiResponse, err: null } ))
+            //     .catch( apiError => res.json( { data: null, err: apiError } ))
+            // })
 
             this.router.put('/:endpoint/:id', this.passport.authenticate('jwt', { session: false }), (req, res) => {
                 console.log(req.user)
