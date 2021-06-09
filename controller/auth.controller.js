@@ -33,6 +33,7 @@
                     res.cookie(process.env.COOKIE_NAME, userToken, { httpOnly: true });
 
                     return resolve(decryptedUser)
+                    // return resolve(userToken)
                 }
                 else{ return reject('Password not valide') }
             })
