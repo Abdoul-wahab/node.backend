@@ -7,6 +7,8 @@ const { Model } = require('mongoose')
         post: require('./post.model'),
         user: require('./user.model'),
         comment: require('./comment.model'),
+        experience: require('./experience.model'),
+        task: require('./task.model'),
     }
 
 

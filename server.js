@@ -4,7 +4,6 @@
     const express = require('express');
     const path = require('path');
     const bodyParser = require('body-parser');
-    const cookieParser = require('cookie-parser');
     const passport = require('passport');
 
     const MongoClass = require('./services/mongo.class')
@@ -21,11 +20,12 @@
 
         init(){
             this.server.use( (req, res, next) => {
-                const allowedOrigins = ['http://127.0.0.1:8020', 'http://localhost:8020', 'http://127.0.0.1:9000', 'http://localhost:9000'];
+                const allowedOrigins = ['http://localhost:8080', 'http://localhost:8080'];
                 const origin = req.headers.origin;
 
                 if(allowedOrigins.indexOf(origin) > -1){ res.setHeader('Access-Control-Allow-Origin', origin)}
-                res.header('Access-Control-Allow-Credentials', true);
+                res.setHeader('Access-Control-Allow-Origin', origin)
+                // res.header('Access-Control-Allow-Credentials', true);
                 res.header('Access-Control-Allow-Methods', ['GET', 'PUT', 'POST', 'DELETE']);
                 res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
@@ -35,7 +35,7 @@
             this.server.use(bodyParser.json({limit: '20mb'}));
             this.server.use(bodyParser.urlencoded({ extended: true }));
 
-            this.server.use(cookieParser(process.env.COOKIE_SECRET));
+            // this.server.use(cookieParser(process.env.COOKIE_SECRET));
 
             this.config();
         }
@@ -52,9 +52,6 @@
             const apiRouter = new ApiRouterClass({ passport });
             this.server.use('/v1', apiRouter.init());
 
-            const BackRouterClass = require('./router/backoffice.router');
-            const backRouter = new BackRouterClass({ passport });
-            this.server.use('/', backRouter.init());
 
             this.launch();
         }
